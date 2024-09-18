@@ -213,10 +213,21 @@ With a NVIDIA GeForce RTX 3070 Ti (8GB VRAM, 6144 CUDA cores), running 20 sampli
 
 ----------
 
-### Potential Improvements and Future Enhancements
+## Potential Improvements, Future Enhancements And Problems
 
--   Experiment with different ControlNet models: You could try different ControlNet models like depth or pose models to see how they affect the structural guidance in your image generation.
+-   **Experiment with different ControlNet models:** You could try different ControlNet models like depth or pose models to see how they affect the structural guidance in your image generation.
     
--   Tuning sampling parameters: Changing the KSampler's settings, such as increasing the number of steps or adjusting the CFG scale, could yield different levels of image sharpness and fidelity.
+-   **Tuning sampling parameters:** Changing the KSampler's settings, such as increasing the number of steps or adjusting the CFG scale, could yield different levels of image sharpness and fidelity.
     
--   Further edge detection exploration: Experimenting with different Canny threshold values might enhance or reduce the influence of edge guidance, depending on your goals for structural accuracy.
+-   **Further edge detection exploration:** Experimenting with different Canny threshold values might enhance or reduce the influence of edge guidance, depending on your goals for structural accuracy.
+- **Poor Edge Detection**: The edges detected by the Canny edge detection node are too weak or too strong, leading to poor results.
+	-   **Solution**:
+	    -   **Fine-tune the thresholds**: Adjust the **low and high thresholds** in the Canny node to values that better capture the important details of the image. Common ranges are:
+	        -   Low threshold: `0.03` to `0.05`
+	        -   High threshold: `0.25` to `0.35`
+	    -   **Experiment with lighting**: If the image has extreme lighting or contrast, the edge detection may behave unexpectedly. Adjust the brightness/contrast of the input image before passing it to the Canny node.
+
+- **Incompatible Model Types**: The output image appears incorrect or the pipeline fails when combining different models like IPAdapter, ControlNet, and diffusion models.
+	-   **Solution**:
+	    -   **Use models of the same type**: For instance, **IPAdapter Style & Composition SDXL** works only with **SDXL models**, and the same applies to **ControlNet** models. This is because different model types (e.g., SD1.5, SD2.1, SDXL) have different architectures and latent spaces.
+	    -   **Why**: Each model type (e.g., SDXL or SD1.5) processes images and latent representations differently. If you mix incompatible models, their latent spaces will not align, causing mismatches during generation. For example, an SD1.5 ControlNet model won’t work properly with an SDXL diffusion model, as they expect different input formats and operate on different scales.
