@@ -1,10 +1,6 @@
 
 # ComfyUI Van Gogh Pipeline
 
-### AppNation AI Engineer Case Study Report
-
-  
-
 ## Introduction
 
 This report describes a custom image generation pipeline built using ComfyUI. Also includes installation steps, pipeline details and some common troubleshooting. The pipeline takes an input image and combines the image’s style based on Vincent van Gogh’s image’s style, while maintaining the composition from the input image.
